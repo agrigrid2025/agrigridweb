@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Register Sub-User{% endblock %}
+{% block content %}
+<h2>Register a New Team Member</h2>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Create User</button>
+</form>
+{% endblock %}
