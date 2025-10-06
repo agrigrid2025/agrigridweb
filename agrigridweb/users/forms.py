@@ -29,12 +29,16 @@ class CompanyForm(forms.ModelForm):
     time_zone = forms.ChoiceField(
         choices=[(tz, tz) for tz in pytz.common_timezones],
         required=True
+        
     )
+
+    google_maps_api_key = forms.CharField(required=False)
 
     class Meta:
         model = Company
         fields = [
             'name', 'abn_number', 'address_line_1', 'address_line_2',
             'city', 'postal_code', 'country', 'email', 'phone_number',
-            'unit_of_measure', 'time_zone'
+            'unit_of_measure', 'time_zone', 'google_maps_api_key'
         ]
+        

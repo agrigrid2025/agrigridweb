@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')), #Landing Page
     path('users/', include('users.urls')), #Auth Routes
+    path('farm/', include('farm.urls')), #Farm and Block Def
 ]

@@ -34,6 +34,8 @@ class Company(models.Model):
     phone_number = models.CharField(max_length=20)
     unit_of_measure = models.CharField(max_length=10, choices=[('metric', 'Metric'), ('imperial', 'Imperial')])
     time_zone = models.CharField(max_length=100)
+    google_maps_api_key = models.CharField(max_length=255, blank=True, null=True)
+
 
     def __str__(self):
         return self.name

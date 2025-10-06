@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}Draw Farm Boundary{% endblock %}
+{% block content %}
+<h2>Draw Boundary for {{ farm.name }}</h2>
+<div id="map" style="height: 500px;"></div>
+<button id="save-boundary" class="btn btn-primary mt-3">Save Boundary</button>
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{ api_key }}&libraries=drawing"></script>
+<script>
+let map, drawingManager, selectedShape;
+
+function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: -17.0, lng: 145.4 },
+        zoom: 12,
+    });
+
+    drawingManager = new google.maps.drawing.DrawingManager({
+        drawingMode: google.maps.drawing.OverlayType.POLYGON,
+        drawingControl: true,
+        drawingControlOptions: {
+            position: google.maps.ControlPosition.TOP_CENTER,
+            drawingModes: ['polygon']
+        },
+    });
+
+    drawingManager.setMap(map);
+
+    google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
+        if (selectedShape) selectedShape.setMap(null);
+        selectedShape = event.overlay;
+    });
+
+    document.getElementById("save-boundary").onclick = function() {
+        if (!selectedShape) return alert("Draw a boundary first.");
+        const path = selectedShape.getPath().getArray().map(coord => [coord.lng(), coord.lat()]);
+        const geojson = {
+            type: "Polygon",
+            coordinates: [path]
+        };
+
+        fetch("{% url 'save_farm_boundary' farm.id %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({ geojson })
+        }).then(() => alert("Boundary saved."));
+    };
+}
+
+window.onload = initMap;
+</script>
+{% endblock %}
