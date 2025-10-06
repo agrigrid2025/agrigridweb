@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'agrigridweb.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://postgres:postgres@localhost:5432/agrigridweb',
+        default='postgresql://agrigrid_postgres_user:4o7dY6fTYLWPsPgG3yoCCSfOPGq6dU8m@dpg-d34i38idbo4c73fg009g-a.oregon-postgres.render.com/agrigrid_postgres',
         conn_max_age=600
     )
 }
