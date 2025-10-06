@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from .forms import ProfileForm
 from .models import Profile
 
@@ -16,10 +17,14 @@ def register(request):
 
 @login_required
 def dashboard(request):
-    profile = request.user.profile
+    # Ensure profile exists
+    profile, created = Profile.objects.get_or_create(user=request.user)
+
     if not profile.is_complete:
         return redirect('complete_profile')
+
     return render(request, 'users/dashboard.html', {'user': request.user})
+
 
 @login_required
 def complete_profile(request):
