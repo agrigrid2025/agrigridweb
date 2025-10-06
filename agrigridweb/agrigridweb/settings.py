@@ -27,7 +27,9 @@ SECRET_KEY = 'django-insecure-%+#vhtow^l(5^)le!c*x#y)8o@_$4$8wk5k&3ks$ht2l@+7meh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "agrigridweb-4.onrender.com",
+]
 
 
 # Application definition
